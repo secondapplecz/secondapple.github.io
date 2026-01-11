@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecondApple.cz | Katalog oprav iPhonů 7-17 Pro Max</title>
+    <meta name="description" content="Profesionální opravy iPhonů modelů 7 až 17 Pro Max. Rychlá cenová nabídka do 24 hodin. Autorizovaný servis s 24 měsíci záruky.">
+    <meta name="keywords" content="oprava iPhone, servis iPhone, výměna displeje iPhone, oprava iPhonu Praha, SecondApple">
+    <title>SecondApple.cz | Profesionální opravy iPhonů 7-17 Pro Max | Rychlý servis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Reset a základní styly */
@@ -54,6 +56,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            text-decoration: none;
         }
 
         .logo-img {
@@ -66,7 +69,7 @@
         nav ul {
             display: flex;
             list-style: none;
-            gap: 1.5rem;
+            gap: 1rem;
         }
 
         nav a {
@@ -76,6 +79,7 @@
             padding: 8px 16px;
             border-radius: 20px;
             transition: all 0.3s;
+            white-space: nowrap;
         }
 
         nav a:hover {
@@ -93,11 +97,13 @@
             transition: all 0.3s;
             border: 2px solid #007aff;
             cursor: pointer;
+            font-size: 0.95rem;
         }
 
         .btn:hover {
             background: transparent;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
         }
 
         /* Hero sekce */
@@ -106,6 +112,7 @@
                         url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: white;
             text-align: center;
             padding: 8rem 0 5rem;
@@ -117,6 +124,7 @@
             font-size: 2.8rem;
             margin-bottom: 1rem;
             font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
         .hero p {
@@ -126,7 +134,7 @@
             opacity: 0.9;
         }
 
-        /* Katalog iPhonů - NOVÝ DESIGN */
+        /* Katalog iPhonů */
         .catalog-section {
             padding: 4rem 0;
             background: white;
@@ -168,9 +176,17 @@
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 2px solid #f0f0f0;
             position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .iphone-model.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .iphone-model:hover {
@@ -210,7 +226,7 @@
 
         .model-image {
             height: 180px;
-            background: #f5f5f7;
+            background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -220,6 +236,11 @@
         .model-image i {
             font-size: 5rem;
             color: #86868b;
+            transition: transform 0.3s;
+        }
+
+        .iphone-model:hover .model-image i {
+            transform: scale(1.1);
         }
 
         .model-features {
@@ -248,6 +269,7 @@
         .features-list i {
             color: #34c759;
             font-size: 0.9rem;
+            flex-shrink: 0;
         }
 
         .model-actions {
@@ -268,9 +290,10 @@
 
         .btn-diagnostic:hover {
             background: #2db54d;
+            border-color: #2db54d;
         }
 
-        /* Email formulář - ZJEDNODUŠENÝ */
+        /* Email formulář */
         .email-form {
             background: #f8f9fa;
             border-radius: 16px;
@@ -317,7 +340,8 @@
             border-radius: 10px;
             font-size: 1rem;
             font-family: inherit;
-            transition: border 0.3s;
+            transition: all 0.3s;
+            background: white;
         }
 
         .form-group input:focus,
@@ -325,6 +349,7 @@
         .form-group textarea:focus {
             outline: none;
             border-color: #007aff;
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
         }
 
         .form-group.full-width {
@@ -431,6 +456,30 @@
             margin-bottom: 2rem;
         }
 
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #86868b;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
         .copyright {
             text-align: center;
             padding-top: 2rem;
@@ -440,17 +489,34 @@
         }
 
         /* Responsivní design */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.5rem;
+            }
+            
+            nav a {
+                padding: 6px 12px;
+                font-size: 0.9rem;
+            }
+        }
+
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 gap: 1rem;
-                padding-top: 10px;
-                padding-bottom: 10px;
+                padding: 15px 0;
             }
             
             .hero {
                 padding: 6rem 0 4rem;
                 margin-top: 120px;
+                background-attachment: scroll;
             }
             
             .hero h1 {
@@ -472,6 +538,10 @@
             .contact-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .model-header h3 {
+                font-size: 1.3rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -487,12 +557,13 @@
                 padding: 1.5rem;
             }
             
-            .model-header h3 {
-                font-size: 1.3rem;
-            }
-            
             .email-form {
                 padding: 1.5rem;
+            }
+            
+            .btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
             }
         }
 
@@ -508,19 +579,32 @@
             }
         }
 
-        .iphone-model {
-            animation: fadeInUp 0.6s ease-out;
+        /* Loading state */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
         }
 
-        .iphone-model:nth-child(2) { animation-delay: 0.1s; }
-        .iphone-model:nth-child(3) { animation-delay: 0.2s; }
-        .iphone-model:nth-child(4) { animation-delay: 0.3s; }
-        .iphone-model:nth-child(5) { animation-delay: 0.4s; }
-        .iphone-model:nth-child(6) { animation-delay: 0.5s; }
-        .iphone-model:nth-child(7) { animation-delay: 0.6s; }
-        .iphone-model:nth-child(8) { animation-delay: 0.7s; }
-        .iphone-model:nth-child(9) { animation-delay: 0.8s; }
-        .iphone-model:nth-child(10) { animation-delay: 0.9s; }
+        /* Success/Error messages */
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            text-align: center;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 <body>
@@ -528,11 +612,11 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">
+                <a href="#home" class="logo">
                     <img src="https://via.placeholder.com/180x45/007aff/ffffff?text=SecondApple.cz" 
                          alt="SecondApple Logo" 
                          class="logo-img">
-                </div>
+                </a>
                 <nav>
                     <ul>
                         <li><a href="#home">Domů</a></li>
@@ -548,7 +632,7 @@
     <!-- Hero -->
     <section class="hero" id="home">
         <div class="container">
-            <h1>Katalog oprav iPhonů 7-17 Pro Max</h1>
+            <h1>Profesionální opravy iPhonů 7-17 Pro Max</h1>
             <p>Vyberte si svůj model iPhonu a pošlete nám email s popisem závady. Do 24 hodin vám zašleme cenovou nabídku.</p>
             <a href="#catalog" class="btn">Prohlédnout katalog</a>
         </div>
@@ -559,7 +643,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>Vyberte svůj iPhone</h2>
-                <p>Klikněte na model který potřebujete opravit. Do emailu nám napište číslo modelu a popis závady.</p>
+                <p>Klikněte na model, který potřebujete opravit. Do emailu nám napište číslo modelu a popis závady.</p>
             </div>
 
             <div class="catalog-grid" id="catalogGrid">
@@ -577,33 +661,24 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="name">Vaše jméno *</label>
-                            <input type="text" id="name" name="name" required>
+                            <input type="text" id="name" name="name" required placeholder="Jan Novák">
                         </div>
                         
                         <div class="form-group">
                             <label for="email">Váš email *</label>
-                            <input type="email" id="email" name="email" required>
+                            <input type="email" id="email" name="email" required placeholder="jan@example.cz">
                         </div>
                         
                         <div class="form-group">
                             <label for="phone">Telefon</label>
-                            <input type="tel" id="phone" name="phone">
+                            <input type="tel" id="phone" name="phone" placeholder="+420 777 888 999">
                         </div>
                         
                         <div class="form-group">
                             <label for="model">Model iPhonu *</label>
                             <select id="model" name="model" required>
                                 <option value="">Vyberte model</option>
-                                <option value="iPhone 7/7 Plus">iPhone 7/7 Plus</option>
-                                <option value="iPhone 8/8 Plus">iPhone 8/8 Plus</option>
-                                <option value="iPhone X/XS">iPhone X/XS</option>
-                                <option value="iPhone 11/11 Pro">iPhone 11/11 Pro</option>
-                                <option value="iPhone 12/12 Pro">iPhone 12/12 Pro</option>
-                                <option value="iPhone 13/13 Pro">iPhone 13/13 Pro</option>
-                                <option value="iPhone 14/14 Pro">iPhone 14/14 Pro</option>
-                                <option value="iPhone 15/15 Pro">iPhone 15/15 Pro</option>
-                                <option value="iPhone 16/16 Pro">iPhone 16/16 Pro</option>
-                                <option value="iPhone 17/17 Pro">iPhone 17/17 Pro</option>
+                                <!-- Options will be populated by JavaScript -->
                             </select>
                         </div>
                         
@@ -612,6 +687,8 @@
                             <textarea id="issue" name="issue" placeholder="Podrobně popište co se s iPhonem děje. Např.: 'iPhone se nenačítá, displej má prasklinu, nejde nabíjet, atd.'" required></textarea>
                         </div>
                     </div>
+                    
+                    <div id="formMessage" class="message"></div>
                     
                     <div class="form-submit">
                         <button type="submit" class="btn btn-send-email">
@@ -683,21 +760,21 @@
                 
                 <div class="footer-section">
                     <h4>Modely které opravujeme</h4>
-                    <ul style="list-style: none;">
-                        <li><a href="#catalog" style="color: #86868b; text-decoration: none;">iPhone 7/8/SE</a></li>
-                        <li><a href="#catalog" style="color: #86868b; text-decoration: none;">iPhone X/XS/11</a></li>
-                        <li><a href="#catalog" style="color: #86868b; text-decoration: none;">iPhone 12/13/14</a></li>
-                        <li><a href="#catalog" style="color: #86868b; text-decoration: none;">iPhone 15/16/17</a></li>
+                    <ul>
+                        <li><a href="#catalog">iPhone 7/8/SE</a></li>
+                        <li><a href="#catalog">iPhone X/XS/11</a></li>
+                        <li><a href="#catalog">iPhone 12/13/14</a></li>
+                        <li><a href="#catalog">iPhone 15/16/17</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Nejčastější opravy</h4>
-                    <ul style="list-style: none;">
-                        <li><a href="#email" style="color: #86868b; text-decoration: none;">Výměna displeje</a></li>
-                        <li><a href="#email" style="color: #86868b; text-decoration: none;">Výměna baterie</a></li>
-                        <li><a href="#email" style="color: #86868b; text-decoration: none;">Oprava nabíjení</a></li>
-                        <li><a href="#email" style="color: #86868b; text-decoration: none;">Výměna kamery</a></li>
+                    <ul>
+                        <li><a href="#email">Výměna displeje</a></li>
+                        <li><a href="#email">Výměna baterie</a></li>
+                        <li><a href="#email">Oprava nabíjení</a></li>
+                        <li><a href="#email">Výměna kamery</a></li>
                     </ul>
                 </div>
             </div>
@@ -869,13 +946,14 @@
             const grid = document.getElementById('catalogGrid');
             grid.innerHTML = '';
             
-            iphoneModels.forEach(model => {
+            iphoneModels.forEach((model, index) => {
                 const featuresList = model.features.map(feature => 
                     `<li><i class="fas fa-check"></i> ${feature}</li>`
                 ).join('');
                 
                 const modelCard = document.createElement('div');
                 modelCard.className = 'iphone-model';
+                modelCard.style.animationDelay = `${index * 0.1}s`;
                 modelCard.innerHTML = `
                     <div class="model-header">
                         <h3>${model.name}</h3>
@@ -899,67 +977,169 @@
                 
                 grid.appendChild(modelCard);
                 
+                // Přidání animace po přidání do DOM
+                setTimeout(() => {
+                    modelCard.classList.add('visible');
+                }, 100);
+                
                 // Tlačítko pro výběr modelu
                 modelCard.querySelector('.btn-diagnostic').addEventListener('click', function() {
-                    const modelName = this.dataset.model;
-                    document.getElementById('model').value = modelName;
-                    document.getElementById('issue').focus();
-                    
-                    // Smooth scroll k formuláři
-                    document.getElementById('email').scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    selectModel(this.dataset.model);
                 });
             });
+            
+            // Naplnění selectu v formuláři
+            const modelSelect = document.getElementById('model');
+            modelSelect.innerHTML = '<option value="">Vyberte model</option>' + 
+                iphoneModels.map(model => 
+                    `<option value="${model.name}">${model.name}</option>`
+                ).join('');
+        }
+
+        // Funkce pro výběr modelu
+        function selectModel(modelName) {
+            const modelSelect = document.getElementById('model');
+            modelSelect.value = modelName;
+            
+            // Smooth scroll k formuláři
+            document.getElementById('email').scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            
+            // Focus na pole s popisem závady
+            setTimeout(() => {
+                document.getElementById('issue').focus();
+            }, 500);
         }
 
         // Formulář odesílání emailu
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const model = document.getElementById('model').value;
-            const issue = document.getElementById('issue').value;
+            const form = this;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const messageDiv = document.getElementById('formMessage');
             
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const model = document.getElementById('model').value;
+            const issue = document.getElementById('issue').value.trim();
+            
+            // Validace
             if (!name || !email || !model || !issue) {
-                alert('Vyplňte prosím všechna povinná pole (jméno, email, model a popis závady).');
+                showMessage('Vyplňte prosím všechna povinná pole (jméno, email, model a popis závady).', 'error');
                 return;
             }
             
-            // Vytvoření emailové zprávy
-            const subject = `Poptávka opravy: ${model}`;
-            const body = `Dobrý den,\n\nmám zájem o opravu iPhonu.\n\n` +
-                        `MODEL: ${model}\n` +
-                        `Jméno: ${name}\n` +
-                        `Email: ${email}\n` +
-                        `Telefon: ${phone || 'neuvedeno'}\n\n` +
-                        `POPIS ZÁVADY:\n${issue}\n\n` +
-                        `Děkuji za cenovou nabídku.\n\nS pozdravem,\n${name}`;
+            // Validace emailu
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showMessage('Zadejte prosím platný email.', 'error');
+                return;
+            }
             
-            // Otevření emailového klienta
-            const mailtoLink = `mailto:nabidky@secondapple.cz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            // Přidání loading state
+            form.classList.add('loading');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Odesílám...';
             
-            // Ukázat potvrzení
-            const confirmed = confirm('Chcete otevřít emailový klient a odeslat poptávku?');
-            if (confirmed) {
-                window.location.href = mailtoLink;
+            try {
+                // Simulace odeslání (nahraďte skutečným API voláním)
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 
-                // Reset formuláře po odeslání
+                // Vytvoření emailové zprávy
+                const subject = `Poptávka opravy: ${model}`;
+                const body = `Dobrý den,\n\nmám zájem o opravu iPhonu.\n\n` +
+                            `MODEL: ${model}\n` +
+                            `Jméno: ${name}\n` +
+                            `Email: ${email}\n` +
+                            `Telefon: ${phone || 'neuvedeno'}\n\n` +
+                            `POPIS ZÁVADY:\n${issue}\n\n` +
+                            `Děkuji za cenovou nabídku.\n\nS pozdravem,\n${name}`;
+                
+                // Otevření emailového klienta
+                const mailtoLink = `mailto:nabidky@secondapple.cz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                
+                showMessage('Formulář byl úspěšně odeslán! Přesměruji vás do emailového klienta...', 'success');
+                
+                // Krátká pauza před přesměrováním
                 setTimeout(() => {
-                    this.reset();
-                    alert('Děkujeme za poptávku! Zkontrolujte váš emailový klient a odešlete email. Ozveme se vám do 24 hodin s cenovou nabídkou.');
-                }, 1000);
+                    window.location.href = mailtoLink;
+                    
+                    // Reset formuláře po odeslání
+                    setTimeout(() => {
+                        form.reset();
+                        form.classList.remove('loading');
+                        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Odeslat poptávku';
+                        messageDiv.style.display = 'none';
+                    }, 2000);
+                }, 2000);
+                
+            } catch (error) {
+                showMessage('Došlo k chybě při odesílání. Zkuste to prosím znovu.', 'error');
+                form.classList.remove('loading');
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Odeslat poptávku';
             }
         });
 
-        // Rok v copyrightu
+        // Funkce pro zobrazení zpráv
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('formMessage');
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+            
+            // Auto-hide po 5 sekundách
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // Inicializace při načtení stránky
         document.addEventListener('DOMContentLoaded', function() {
             loadCatalog();
-            document.querySelector('.copyright p').innerHTML = 
-                `&copy; ${new Date().getFullYear()} SecondApple.cz - Katalog oprav iPhonů | IČO: 12345678`;
+            
+            // Aktualizace roku v copyrightu
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+            
+            // Smooth scroll pro anchor odkazy
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Aktualizace URL bez reloadu
+                        history.pushState(null, null, href);
+                    }
+                });
+            });
+            
+            // Intersection Observer pro lazy loading animací
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '50px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.iphone-model').forEach(item => {
+                observer.observe(item);
+            });
         });
     </script>
 </body>
