@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecondApple.cz | Diagnostika a opravy iPhonů</title>
+    <title>SecondApple.cz | Katalog oprav iPhonů 7-17 Pro Max</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Reset a základní styly */
@@ -126,7 +126,15 @@
             opacity: 0.9;
         }
 
-        /* Sekce zařízení */
+        /* Katalog iPhonů - NOVÝ DESIGN */
+        .catalog-section {
+            padding: 4rem 0;
+            background: white;
+            margin-bottom: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
         .section-title {
             text-align: center;
             margin-bottom: 3rem;
@@ -141,321 +149,271 @@
             border-bottom: 3px solid #007aff;
         }
 
-        /* Grid iPhonů */
-        .iphone-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 5rem;
+        .section-title p {
+            color: #86868b;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        .iphone-card {
+        /* Katalog grid */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .iphone-model {
             background: white;
             border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s;
-            cursor: pointer;
             overflow: hidden;
-            border: 2px solid #e5e5e7;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 2px solid #f0f0f0;
             position: relative;
         }
 
-        .iphone-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        .iphone-model:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             border-color: #007aff;
         }
 
-        .iphone-header {
+        .model-header {
             background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
             color: white;
-            padding: 1.5rem;
+            padding: 1.8rem;
             text-align: center;
         }
 
-        .iphone-header h3 {
-            font-size: 1.4rem;
+        .model-header h3 {
+            font-size: 1.5rem;
             margin-bottom: 5px;
             font-weight: 700;
         }
 
-        .iphone-year {
-            font-size: 0.9rem;
+        .model-year {
+            font-size: 0.95rem;
             opacity: 0.9;
             font-weight: 400;
         }
 
-        .iphone-price {
-            font-size: 1.3rem;
+        .model-price {
+            font-size: 1.4rem;
             font-weight: 700;
             margin-top: 10px;
+            background: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
         }
 
-        /* ========== MODÁLNÍ OKNO (CELÁ OBRAZOVKA) ========== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 2000;
-            overflow-y: auto;
+        .model-image {
+            height: 180px;
+            background: #f5f5f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 20px;
         }
 
-        .modal-overlay.active {
-            display: block;
+        .model-image i {
+            font-size: 5rem;
+            color: #86868b;
         }
 
-        .modal-content {
-            background: white;
-            max-width: 1000px;
-            margin: 40px auto;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: modalFadeIn 0.4s ease;
-        }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .modal-header h3 {
-            font-size: 2rem;
-            margin-bottom: 5px;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .close-modal:hover {
-            background: rgba(255,255,255,0.3);
-            transform: rotate(90deg);
-        }
-
-        .modal-body {
-            padding: 2.5rem;
-        }
-
-        /* Diagnostický formulář v modálu */
-        .diagnostic-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .issue-category {
-            background: #f8f9fa;
-            border-radius: 12px;
+        .model-features {
             padding: 1.5rem;
-            border: 2px solid #e9ecef;
+            border-top: 1px solid #f0f0f0;
         }
 
-        .issue-category h4 {
-            color: #007aff;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
+        .features-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f5f5f5;
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: 0.95rem;
         }
 
-        .issue-category h4 i {
-            font-size: 1.1rem;
+        .features-list li:last-child {
+            border-bottom: none;
         }
 
-        .checkbox-group {
+        .features-list i {
+            color: #34c759;
+            font-size: 0.9rem;
+        }
+
+        .model-actions {
+            padding: 1rem 1.5rem 1.5rem;
+            text-align: center;
+        }
+
+        .btn-diagnostic {
+            background: #34c759;
+            border-color: #34c759;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+        }
+
+        .btn-diagnostic:hover {
+            background: #2db54d;
+        }
+
+        /* Email formulář - ZJEDNODUŠENÝ */
+        .email-form {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 3rem;
+            margin-top: 3rem;
+            border: 2px solid #e9ecef;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-title h3 {
+            font-size: 1.8rem;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 8px;
         }
 
-        .checkbox-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 8px;
-            border-radius: 8px;
-            transition: background 0.3s;
-            cursor: pointer;
-        }
-
-        .checkbox-item:hover {
-            background: rgba(0,122,255,0.05);
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            margin-top: 3px;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #007aff;
-        }
-
-        .checkbox-item label {
-            flex: 1;
-            cursor: pointer;
+        .form-group label {
+            font-weight: 600;
+            color: #515154;
             font-size: 0.95rem;
-            line-height: 1.4;
         }
 
-        /* Textarea pro další informace */
-        .additional-info {
-            grid-column: 1 / -1;
-            margin-top: 1rem;
-        }
-
-        .additional-info textarea {
-            width: 100%;
-            padding: 15px;
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 14px;
             border: 2px solid #e9ecef;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 1rem;
             font-family: inherit;
-            resize: vertical;
-            min-height: 120px;
             transition: border 0.3s;
         }
 
-        .additional-info textarea:focus {
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
             outline: none;
             border-color: #007aff;
         }
 
-        /* Tlačítko odeslání v modálu */
-        .modal-actions {
+        .form-group.full-width {
             grid-column: 1 / -1;
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 2px solid #e9ecef;
         }
 
-        .btn-send {
-            background: #34c759;
-            border-color: #34c759;
-            padding: 15px 40px;
-            font-size: 1.1rem;
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
         }
 
-        .btn-send:hover {
-            background: #2db54d;
-        }
-
-        .btn-close {
-            background: #ff3b30;
-            border-color: #ff3b30;
-        }
-
-        .btn-close:hover {
-            background: #e0352b;
-        }
-
-        /* O nás sekce */
-        .about {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 4rem;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-
-        .stat-item {
+        .form-submit {
             text-align: center;
-            padding: 1.5rem;
-            background: #f5f5f7;
-            border-radius: 15px;
+            margin-top: 2rem;
         }
 
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: #007aff;
-            margin-bottom: 0.5rem;
+        .btn-send-email {
+            background: #007aff;
+            border-color: #007aff;
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* Kontakt */
-        .contact {
-            margin-bottom: 4rem;
+        /* Kontaktní informace */
+        .contact-info {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 4rem 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            text-align: center;
         }
 
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .contact-info {
-            background: white;
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
         }
 
         .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #f0f0f0;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .contact-icon {
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             background: #f0f7ff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #007aff;
+            font-size: 1.5rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .contact-item h4 {
             font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #1d1d1f;
+        }
+
+        .contact-item p {
+            color: #515154;
+            line-height: 1.5;
+        }
+
+        .contact-item a {
+            color: #007aff;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
         }
 
         /* Footer */
@@ -463,6 +421,7 @@
             background: #1d1d1f;
             color: white;
             padding: 3rem 0 2rem;
+            margin-top: 4rem;
         }
 
         .footer-content {
@@ -498,28 +457,19 @@
                 font-size: 2.2rem;
             }
             
-            .iphone-grid {
+            .catalog-grid {
                 grid-template-columns: 1fr;
             }
             
-            .modal-content {
-                margin: 20px auto;
-                border-radius: 15px;
+            .email-form {
+                padding: 2rem;
             }
             
-            .modal-header {
-                padding: 1.5rem;
-            }
-            
-            .modal-body {
-                padding: 1.5rem;
-            }
-            
-            .about-content {
+            .form-grid {
                 grid-template-columns: 1fr;
             }
             
-            .stats {
+            .contact-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -529,45 +479,48 @@
                 font-size: 1.8rem;
             }
             
-            .modal-header h3 {
-                font-size: 1.5rem;
+            .section-title h2 {
+                font-size: 1.8rem;
             }
             
-            .diagnostic-form {
-                grid-template-columns: 1fr;
+            .model-header {
+                padding: 1.5rem;
             }
             
-            .modal-actions {
-                flex-direction: column;
+            .model-header h3 {
+                font-size: 1.3rem;
             }
             
-            .btn-send, .btn-close {
-                width: 100%;
+            .email-form {
+                padding: 1.5rem;
             }
         }
 
-        /* Načítání animace */
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 3rem;
-            color: #007aff;
+        /* Animace */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .loading.active {
-            display: block;
+        .iphone-model {
+            animation: fadeInUp 0.6s ease-out;
         }
 
-        .success-message {
-            display: none;
-            text-align: center;
-            padding: 3rem;
-            color: #34c759;
-        }
-
-        .success-message.active {
-            display: block;
-        }
+        .iphone-model:nth-child(2) { animation-delay: 0.1s; }
+        .iphone-model:nth-child(3) { animation-delay: 0.2s; }
+        .iphone-model:nth-child(4) { animation-delay: 0.3s; }
+        .iphone-model:nth-child(5) { animation-delay: 0.4s; }
+        .iphone-model:nth-child(6) { animation-delay: 0.5s; }
+        .iphone-model:nth-child(7) { animation-delay: 0.6s; }
+        .iphone-model:nth-child(8) { animation-delay: 0.7s; }
+        .iphone-model:nth-child(9) { animation-delay: 0.8s; }
+        .iphone-model:nth-child(10) { animation-delay: 0.9s; }
     </style>
 </head>
 <body>
@@ -583,9 +536,9 @@
                 <nav>
                     <ul>
                         <li><a href="#home">Domů</a></li>
-                        <li><a href="#devices">Diagnostika</a></li>
-                        <li><a href="#about">O nás</a></li>
+                        <li><a href="#catalog">Katalog</a></li>
                         <li><a href="#contact">Kontakt</a></li>
+                        <li><a href="#email" class="btn">Napsat email</a></li>
                     </ul>
                 </nav>
             </div>
@@ -595,190 +548,125 @@
     <!-- Hero -->
     <section class="hero" id="home">
         <div class="container">
-            <h1>Diagnostika iPhonů 7 - 17 Pro Max</h1>
-            <p>Vyberte svůj model, zaškrtněte závady a my vám pošleme cenovou nabídku na email.</p>
-            <a href="#devices" class="btn">Spustit diagnostiku</a>
+            <h1>Katalog oprav iPhonů 7-17 Pro Max</h1>
+            <p>Vyberte si svůj model iPhonu a pošlete nám email s popisem závady. Do 24 hodin vám zašleme cenovou nabídku.</p>
+            <a href="#catalog" class="btn">Prohlédnout katalog</a>
         </div>
     </section>
 
-    <!-- Sekce zařízení -->
-    <section id="devices" class="container">
-        <div class="section-title">
-            <h2>Vyberte svůj iPhone</h2>
-            <p>Klikněte na model pro otevření diagnostického formuláře</p>
-        </div>
-
-        <div class="iphone-grid" id="iphoneGrid">
-            <!-- iPhony se načtou JavaScriptem -->
-        </div>
-    </section>
-
-    <!-- ========== MODÁLNÍ OKNO ========== -->
-    <div class="modal-overlay" id="diagnosticModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTitle">iPhone X - Diagnostika závad</h3>
-                <p id="modalSubtitle">Zaškrtněte všechny závady které má váš iPhone</p>
-                <button class="close-modal" id="closeModal">
-                    <i class="fas fa-times"></i>
-                </button>
+    <!-- Katalog iPhonů -->
+    <section class="catalog-section" id="catalog">
+        <div class="container">
+            <div class="section-title">
+                <h2>Vyberte svůj iPhone</h2>
+                <p>Klikněte na model který potřebujete opravit. Do emailu nám napište číslo modelu a popis závady.</p>
             </div>
-            
-            <div class="modal-body">
-                <!-- Formulář diagnostiky -->
-                <form id="diagnosticForm" class="diagnostic-form">
-                    <!-- Kategorie se načtou JavaScriptem -->
-                    <div id="formCategories"></div>
-                    
-                    <!-- Další informace -->
-                    <div class="additional-info">
-                        <h4><i class="fas fa-comment-alt"></i> Další informace</h4>
-                        <textarea id="additionalInfo" 
-                                  placeholder="Popište podrobněji závadu, jak k ní došlo, nebo další detaily které nám pomohou s cenovou kalkulací..."></textarea>
-                    </div>
-                    
-                    <!-- Kontaktní údaje -->
-                    <div class="issue-category" style="grid-column: 1 / -1;">
-                        <h4><i class="fas fa-user"></i> Vaše kontaktní údaje</h4>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div>
-                                <input type="text" id="clientName" placeholder="Vaše jméno" style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px;">
-                            </div>
-                            <div>
-                                <input type="email" id="clientEmail" placeholder="Váš email" style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px;">
-                            </div>
-                            <div>
-                                <input type="tel" id="clientPhone" placeholder="Telefon" style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px;">
-                            </div>
-                            <div>
-                                <input type="text" id="clientCity" placeholder="Město" style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px;">
-                            </div>
+
+            <div class="catalog-grid" id="catalogGrid">
+                <!-- iPhone modely se načtou JavaScriptem -->
+            </div>
+
+            <!-- Email formulář -->
+            <div class="email-form" id="email">
+                <div class="form-title">
+                    <h3>Napište nám email s popisem závady</h3>
+                    <p>Vyplňte formulář a my vám do 24 hodin zašleme cenovou nabídku</p>
+                </div>
+
+                <form id="contactForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Vaše jméno *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Váš email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Telefon</label>
+                            <input type="tel" id="phone" name="phone">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="model">Model iPhonu *</label>
+                            <select id="model" name="model" required>
+                                <option value="">Vyberte model</option>
+                                <option value="iPhone 7/7 Plus">iPhone 7/7 Plus</option>
+                                <option value="iPhone 8/8 Plus">iPhone 8/8 Plus</option>
+                                <option value="iPhone X/XS">iPhone X/XS</option>
+                                <option value="iPhone 11/11 Pro">iPhone 11/11 Pro</option>
+                                <option value="iPhone 12/12 Pro">iPhone 12/12 Pro</option>
+                                <option value="iPhone 13/13 Pro">iPhone 13/13 Pro</option>
+                                <option value="iPhone 14/14 Pro">iPhone 14/14 Pro</option>
+                                <option value="iPhone 15/15 Pro">iPhone 15/15 Pro</option>
+                                <option value="iPhone 16/16 Pro">iPhone 16/16 Pro</option>
+                                <option value="iPhone 17/17 Pro">iPhone 17/17 Pro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="issue">Popis závady *</label>
+                            <textarea id="issue" name="issue" placeholder="Podrobně popište co se s iPhonem děje. Např.: 'iPhone se nenačítá, displej má prasklinu, nejde nabíjet, atd.'" required></textarea>
                         </div>
                     </div>
                     
-                    <!-- Načítání a zpráva -->
-                    <div class="loading" id="loadingIndicator">
-                        <i class="fas fa-spinner fa-spin fa-3x"></i>
-                        <p style="margin-top: 1rem;">Odesílám diagnostiku na email...</p>
-                    </div>
-                    
-                    <div class="success-message" id="successMessage">
-                        <i class="fas fa-check-circle fa-3x"></i>
-                        <h3 style="margin: 1rem 0;">Diagnostika odeslána!</h3>
-                        <p>Zkontrolujte váš email. Ozveme se vám do 30 minut s cenovou nabídkou.</p>
-                    </div>
-                    
-                    <!-- Tlačítka -->
-                    <div class="modal-actions">
-                        <button type="submit" class="btn btn-send">
-                            <i class="fas fa-paper-plane"></i> Odeslat diagnostiku na email
+                    <div class="form-submit">
+                        <button type="submit" class="btn btn-send-email">
+                            <i class="fas fa-paper-plane"></i> Odeslat poptávku
                         </button>
-                        <button type="button" class="btn btn-close" id="cancelModal">
-                            <i class="fas fa-times"></i> Zrušit
-                        </button>
+                        <p style="margin-top: 1rem; color: #86868b; font-size: 0.9rem;">
+                            Nebo nám napište přímo na: <a href="mailto:info@secondapple.cz" style="color: #007aff;">info@secondapple.cz</a>
+                        </p>
                     </div>
                 </form>
             </div>
         </div>
-    </div>
-
-    <!-- O nás -->
-    <section id="about" class="container">
-        <div class="about">
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Jak funguje diagnostika?</h3>
-                    <p>1. <strong>Vyberte model</strong> iPhonu ze seznamu</p>
-                    <p>2. <strong>Zaškrtněte závady</strong> které váš iPhone má</p>
-                    <p>3. <strong>Vyplňte kontakt</strong> a pošlete nám diagnostiku</p>
-                    <p>4. <strong>Do 30 minut</strong> vám pošleme cenovou nabídku na email</p>
-                    <p>5. <strong>Přijďte k nám</strong> a my iPhone opravíme s 24 měsíční zárukou</p>
-                </div>
-                
-                <div class="stats">
-                    <div class="stat-item">
-                        <div class="stat-number">30min</div>
-                        <p>maximální čas odpovědi</p>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24</div>
-                        <p>měsíců záruka na opravy</p>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">95%</div>
-                        <p>přesnost diagnostiky</p>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">0 Kč</div>
-                        <p>diagnostika zdarma</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </section>
 
-    <!-- Kontakt -->
-    <section id="contact" class="container contact">
-        <div class="section-title">
-            <h2>Kontakt a provozovna</h2>
-            <p>Přijďte k nám nebo nás kontaktujte</p>
-        </div>
-        
-        <div class="contact-grid">
-            <div class="contact-info">
+    <!-- Kontaktní informace -->
+    <section class="container" id="contact">
+        <div class="contact-info">
+            <div class="section-title">
+                <h2>Kontaktujte nás</h2>
+                <p>Jsme tu pro vás 7 dní v týdnu</p>
+            </div>
+            
+            <div class="contact-grid">
                 <div class="contact-item">
                     <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
+                        <i class="fas fa-envelope"></i>
                     </div>
-                    <div>
-                        <h4>Adresa servisu</h4>
-                        <p>Apple Street 123<br>Praha 1, 110 00</p>
-                    </div>
+                    <h4>Email pro nabídky</h4>
+                    <p>Pošlete nám popis závady a my vám zašleme cenovou nabídku do 24 hodin.</p>
+                    <a href="mailto:nabidky@secondapple.cz">nabidky@secondapple.cz</a>
                 </div>
                 
                 <div class="contact-item">
                     <div class="contact-icon">
                         <i class="fas fa-phone"></i>
                     </div>
-                    <div>
-                        <h4>Telefon</h4>
-                        <p><a href="tel:+420777888999" style="color: #007aff; text-decoration: none;">+420 777 888 999</a></p>
-                        <p style="color: #86868b; font-size: 0.9rem;">Nonstop pohotovost</p>
-                    </div>
+                    <h4>Telefon</h4>
+                    <p>Máte urgentní problém? Zavolejte nám.</p>
+                    <a href="tel:+420777888999">+420 777 888 999</a>
                 </div>
                 
                 <div class="contact-item">
                     <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
+                        <i class="fas fa-map-marker-alt"></i>
                     </div>
-                    <div>
-                        <h4>Email pro nabídky</h4>
-                        <p><a href="mailto:nabidky@secondapple.cz" style="color: #007aff; text-decoration: none;">nabidky@secondapple.cz</a></p>
-                        <p style="color: #86868b; font-size: 0.9rem;">Cenové nabídky</p>
-                    </div>
+                    <h4>Adresa servisu</h4>
+                    <p>Apple Street 123<br>Praha 1, 110 00</p>
                 </div>
                 
                 <div class="contact-item">
                     <div class="contact-icon">
                         <i class="fas fa-clock"></i>
                     </div>
-                    <div>
-                        <h4>Otevírací doba</h4>
-                        <p>Po-Pá: 8:00 - 20:00<br>So-Ne: 9:00 - 18:00</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="contact-info">
-                <h3>Rychlá objednávka opravy</h3>
-                <p>Už máte cenovou nabídku? Zarezervujte si termín opravy.</p>
-                <div style="margin-top: 1.5rem;">
-                    <a href="tel:+420777888999" class="btn" style="display: block; text-align: center; margin-bottom: 1rem;">
-                        <i class="fas fa-phone"></i> Zavolat a domluvit termín
-                    </a>
-                    <a href="mailto:objednavky@secondapple.cz" class="btn" style="display: block; text-align: center; background: #34c759; border-color: #34c759;">
-                        <i class="fas fa-calendar-alt"></i> Rezervovat online
-                    </a>
+                    <h4>Otevírací doba</h4>
+                    <p>Po-Pá: 8:00 - 20:00<br>So-Ne: 9:00 - 18:00</p>
                 </div>
             </div>
         </div>
@@ -790,263 +678,289 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>SecondApple.cz</h4>
-                    <p>Online diagnostika a opravy iPhonů. Zašlete nám závady a my vám pošleme cenovou nabídku.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Rychlé odkazy</h4>
-                    <ul style="list-style: none;">
-                        <li><a href="#home" style="color: #86868b; text-decoration: none;">Domů</a></li>
-                        <li><a href="#devices" style="color: #86868b; text-decoration: none;">Diagnostika</a></li>
-                        <li><a href="#about" style="color: #86868b; text-decoration: none;">Jak to funguje</a></li>
-                        <li><a href="#contact" style="color: #86868b; text-decoration: none;">Kontakt</a></li>
-                    </ul>
+                    <p>Online katalog oprav iPhonů. Pošlete nám email s popisem závady a my vám zašleme cenovou nabídku.</p>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Modely které opravujeme</h4>
                     <ul style="list-style: none;">
-                        <li><a href="#" style="color: #86868b; text-decoration: none;">iPhone 7/8/SE</a></li>
-                        <li><a href="#" style="color: #86868b; text-decoration: none;">iPhone X/XS/11</a></li>
-                        <li><a href="#" style="color: #86868b; text-decoration: none;">iPhone 12/13/14</a></li>
-                        <li><a href="#" style="color: #86868b; text-decoration: none;">iPhone 15/16/17</a></li>
+                        <li><a href="#catalog" style="color: #86868b; text-decoration: none;">iPhone 7/8/SE</a></li>
+                        <li><a href="#catalog" style="color: #86868b; text-decoration: none;">iPhone X/XS/11</a></li>
+                        <li><a href="#catalog" style="color: #86868b; text-decoration: none;">iPhone 12/13/14</a></li>
+                        <li><a href="#catalog" style="color: #86868b; text-decoration: none;">iPhone 15/16/17</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Nejčastější opravy</h4>
+                    <ul style="list-style: none;">
+                        <li><a href="#email" style="color: #86868b; text-decoration: none;">Výměna displeje</a></li>
+                        <li><a href="#email" style="color: #86868b; text-decoration: none;">Výměna baterie</a></li>
+                        <li><a href="#email" style="color: #86868b; text-decoration: none;">Oprava nabíjení</a></li>
+                        <li><a href="#email" style="color: #86868b; text-decoration: none;">Výměna kamery</a></li>
                     </ul>
                 </div>
             </div>
             
             <div class="copyright">
-                <p>&copy; <span id="currentYear"></span> SecondApple.cz - Online diagnostika iPhonů | IČO: 12345678</p>
-                <p style="margin-top: 0.5rem; font-size: 0.8rem;">Diagnostika zdarma | Cena do 30 minut | 24 měsíců záruka</p>
+                <p>&copy; <span id="currentYear"></span> SecondApple.cz - Katalog oprav iPhonů | IČO: 12345678</p>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem;">Odezva do 24 hodin | 24 měsíců záruka | Profesionální servis</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Data iPhonů s diagnostickými kategoriemi
-        const iphones = [
+        // Data iPhonů pro katalog
+        const iphoneModels = [
             {
                 id: "iphone7",
                 name: "iPhone 7/7 Plus",
                 year: "2016",
                 price: "od 1 990 Kč",
-                categories: {
-                    "Displej a sklo": [
-                        "Prasklý displej",
-                        "Rozbité sklo",
-                        "Nefunguje dotyk",
-                        "Žluté skvrny na displeji",
-                        "Obraz se třese",
-                        "Tmavé fleky"
-                    ],
-                    "Baterie a nabíjení": [
-                        "Rychle se vybíjí",
-                        "Nabíjí se pomalu",
-                        "Nabíjí pouze do určitého %",
-                        "Telefon se sám vypíná",
-                        "Baterie nafouklá",
-                        "Nabíjecí port nefunguje"
-                    ],
-                    "Tlačítka a konektory": [
-                        "Tlačítko Home nefunguje",
-                        "Tlačítko power nefunguje",
-                        "Tlačítka hlasitosti nefungují",
-                        "Jack na sluchátka nefunguje",
-                        "Reproduktor nefunguje",
-                        "Mikrofon nefunguje"
-                    ],
-                    "Kamera": [
-                        "Přední kamera nefunguje",
-                        "Zadní kamera nefunguje",
-                        "Blesk nefunguje",
-                        "Rozmazané fotky",
-                        "Kamera se klepe",
-                        "Nefunguje zoom"
-                    ],
-                    "Software a výkon": [
-                        "Telefon se restartuje",
-                        "Pomalý výkon",
-                        "Zasekává se",
-                        "Nabootuje se",
-                        "Nefunguje Wi-Fi",
-                        "Nefunguje Bluetooth"
-                    ]
-                }
+                features: [
+                    "Výměna displeje",
+                    "Výměna baterie",
+                    "Oprava nabíjecího portu",
+                    "Výměna kamery",
+                    "Oprava reproduktoru",
+                    "Výměna tlačítek"
+                ],
+                note: "Bez 3.5mm jacku"
             },
             {
                 id: "iphone8",
                 name: "iPhone 8/8 Plus",
                 year: "2017",
                 price: "od 2 290 Kč",
-                categories: {
-                    "Displej a sklo": [
-                        "Prasklý displej",
-                        "Rozbité sklo",
-                        "Nejede dotyk",
-                        "Spálené pixely",
-                        "Obraz se třese"
-                    ],
-                    "Baterie a bezdrátové nabíjení": [
-                        "Rychlé vybíjení",
-                        "Bezdrátové nabíjení nefunguje",
-                        "Nabíjí se pomalu",
-                        "Baterie nafouklá"
-                    ],
-                    "Tlačítka": [
-                        "Tlačítko Home nefunguje",
-                        "Power tlačítko nefunguje",
-                        "Tlačítka hlasitosti nefungují"
-                    ],
-                    "Kamera": [
-                        "Přední kamera nefunguje",
-                        "Zadní kamera nefunguje",
-                        "Blesk nefunguje"
-                    ],
-                    "Výkon a připojení": [
-                        "Telefon se restartuje",
-                        "Nefunguje Wi-Fi",
-                        "Pomalý výkon"
-                    ]
-                }
+                features: [
+                    "Výměna displeje",
+                    "Výměna baterie",
+                    "Bezdrátové nabíjení",
+                    "Výměna kamery",
+                    "Oprava reproduktoru",
+                    "Výměna tlačítek"
+                ],
+                note: "Wireless charging"
             },
             {
                 id: "iphoneX",
                 name: "iPhone X/XS",
                 year: "2017/2018",
                 price: "od 2 990 Kč",
-                categories: {
-                    "OLED displej": [
-                        "Prasklý OLED displej",
-                        "Zelené čáry na displeji",
-                        "Spálené pixely",
-                        "Nejede dotyk",
-                        "Obraz se třese"
-                    ],
-                    "Baterie": [
-                        "Rychlé vybíjení",
-                        "Nabíjí se pomalu",
-                        "Baterie nafouklá"
-                    ],
-                    "Face ID a kamera": [
-                        "Face ID nefunguje",
-                        "TrueDepth kamera nefunguje",
-                        "Zadní kamera nefunguje",
-                        "Blesk nefunguje"
-                    ],
-                    "Reproduktory a mikrofon": [
-                        "Reproduktor nefunguje",
-                        "Mikrofon nefunguje",
-                        "Hlasitý reproduktor nefunguje"
-                    ],
-                    "Výkon": [
-                        "Telefon se restartuje",
-                        "Pomalý výkon",
-                        "Nabootuje se"
-                    ]
-                }
+                features: [
+                    "Výměna OLED displeje",
+                    "Výměna baterie",
+                    "Oprava TrueDepth kamery",
+                    "Reparatura těla",
+                    "Vodotěsné těsnění",
+                    "Výměna reproduktoru"
+                ],
+                note: "První bez home buttonu"
             },
             {
                 id: "iphone11",
                 name: "iPhone 11/11 Pro",
                 year: "2019",
                 price: "od 3 490 Kč",
-                categories: {
-                    "Displej": [
-                        "Prasklý displej",
-                        "Nejede dotyk",
-                        "Obraz se třese"
-                    ],
-                    "Baterie": [
-                        "Rychlé vybíjení",
-                        "Nabíjí se pomalu"
-                    ],
-                    "Kamera": [
-                        "Přední kamera nefunguje",
-                        "Zadní kamera nefunguje",
-                        "Ultrawide kamera nefunguje",
-                        "Night Mode nefunguje"
-                    ],
-                    "Audio": [
-                        "Reproduktor nefunguje",
-                        "Mikrofon nefunguje"
-                    ],
-                    "Výkon": [
-                        "Telefon se restartuje",
-                        "Pomalý výkon"
-                    ]
-                }
+                features: [
+                    "Výměna displeje",
+                    "Výměna baterie",
+                    "Výměna trojité kamery",
+                    "Oprava U1 čipu",
+                    "Vodotěsné těsnění",
+                    "Výměna tlačítek"
+                ],
+                note: "Tři kamery"
             },
             {
                 id: "iphone12",
                 name: "iPhone 12/12 Pro",
                 year: "2020",
                 price: "od 3 990 Kč",
-                categories: {
-                    "Ceramic Shield displej": [
-                        "Prasklý displej",
-                        "Rozbité sklo",
-                        "Nejede dotyk"
-                    ],
-                    "MagSafe a baterie": [
-                        "MagSafe nefunguje",
-                        "Rychlé vybíjení",
-                        "Nabíjí se pomalu"
-                    ],
-                    "Kamera a LiDAR": [
-                        "Přední kamera nefunguje",
-                        "Zadní kamera nefunguje",
-                        "LiDAR nefunguje"
-                    ],
-                    "5G a připojení": [
-                        "5G nefunguje",
-                        "Wi-Fi slabý signál",
-                        "Bluetooth nefunguje"
-                    ],
-                    "Výkon": [
-                        "Telefon se restartuje",
-                        "Pomalý výkon"
-                    ]
-                }
+                features: [
+                    "Výměna Ceramic Shield",
+                    "Výměna baterie",
+                    "Oprava MagSafe",
+                    "5G anténa oprava",
+                    "LiDAR oprava",
+                    "Vodotěsné těsnění"
+                ],
+                note: "MagSafe"
             },
             {
                 id: "iphone13",
                 name: "iPhone 13/13 Pro",
                 year: "2021",
                 price: "od 4 490 Kč",
-                categories: {
-                    "ProMotion displej": [
-                        "Prasklý displej",
-                        "120Hz nefunguje",
-                        "Nejede dotyk"
-                    ],
-                    "Baterie": [
-                        "Rychlé vybíjení",
-                        "Nabíjí se pomalu"
-                    ],
-                    "Kamera": [
-                        "Přední kamera nefunguje",
-                        "Cinematic Mode nefunguje",
-                        "Macro režim nefunguje"
-                    ],
-                    "Audio a mikrofon": [
-                        "Reproduktor nefunguje",
-                        "Mikrofon nefunguje",
-                        "Spatial Audio nefunguje"
-                    ],
-                    "Výkon": [
-                        "Telefon se restartuje",
-                        "Pomalý výkon"
-                    ]
-                }
+                features: [
+                    "Výměna 120Hz ProMotion",
+                    "Výměna baterie",
+                    "Oprava Cinematic Mode",
+                    "Výměna kamery",
+                    "Vodotěsné těsnění",
+                    "Oprava reproduktoru"
+                ],
+                note: "ProMotion 120Hz"
             },
             {
                 id: "iphone14",
                 name: "iPhone 14/14 Pro",
                 year: "2022",
                 price: "od 4 990 Kč",
-                categories: {
-                    "Displej": [
-                        "Prasklý displej",
-                        "Always-On nefunguje",
-                        "Nejede dotyk"
-                    ],
-                    "
+                features: [
+                    "Výměna displeje",
+                    "Výměna baterie",
+                    "48MP fotoaparát oprava",
+                    "Always-On Display",
+                    "Vodotěsné těsnění",
+                    "Oprava reproduktoru"
+                ],
+                note: "Dynamic Island"
+            },
+            {
+                id: "iphone15",
+                name: "iPhone 15/15 Pro",
+                year: "2023",
+                price: "od 5 490 Kč",
+                features: [
+                    "Výměna titanového rámu",
+                    "USB-C port oprava",
+                    "Action Button oprava",
+                    "5x teleobjektiv oprava",
+                    "Vodotěsné těsnění",
+                    "Výměna tlačítek"
+                ],
+                note: "Titan & USB-C"
+            },
+            {
+                id: "iphone16",
+                name: "iPhone 16/16 Pro",
+                year: "2024",
+                price: "od 5 990 Kč",
+                features: [
+                    "Výměna displeje",
+                    "Výměna baterie",
+                    "AI čip diagnostika",
+                    "Thermal system oprava",
+                    "Vodotěsné těsnění",
+                    "Výměna tlačítek"
+                ],
+                note: "AI focused"
+            },
+            {
+                id: "iphone17",
+                name: "iPhone 17/17 Pro",
+                year: "2025",
+                price: "od 6 490 Kč",
+                note: "Future model",
+                features: [
+                    "Výměna displeje",
+                    "Výměna baterie",
+                    "Základní deska oprava",
+                    "Foldable mechanism",
+                    "Vodotěsné těsnění",
+                    "Výměna tlačítek"
+                ]
+            }
+        ];
+
+        // Načtení katalogu
+        function loadCatalog() {
+            const grid = document.getElementById('catalogGrid');
+            grid.innerHTML = '';
+            
+            iphoneModels.forEach(model => {
+                const featuresList = model.features.map(feature => 
+                    `<li><i class="fas fa-check"></i> ${feature}</li>`
+                ).join('');
+                
+                const modelCard = document.createElement('div');
+                modelCard.className = 'iphone-model';
+                modelCard.innerHTML = `
+                    <div class="model-header">
+                        <h3>${model.name}</h3>
+                        <div class="model-year">${model.year} • ${model.note}</div>
+                        <div class="model-price">${model.price}</div>
+                    </div>
+                    <div class="model-image">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <div class="model-features">
+                        <ul class="features-list">
+                            ${featuresList}
+                        </ul>
+                    </div>
+                    <div class="model-actions">
+                        <button class="btn btn-diagnostic" data-model="${model.name}">
+                            <i class="fas fa-wrench"></i> Opravit tento model
+                        </button>
+                    </div>
+                `;
+                
+                grid.appendChild(modelCard);
+                
+                // Tlačítko pro výběr modelu
+                modelCard.querySelector('.btn-diagnostic').addEventListener('click', function() {
+                    const modelName = this.dataset.model;
+                    document.getElementById('model').value = modelName;
+                    document.getElementById('issue').focus();
+                    
+                    // Smooth scroll k formuláři
+                    document.getElementById('email').scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                });
+            });
+        }
+
+        // Formulář odesílání emailu
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const model = document.getElementById('model').value;
+            const issue = document.getElementById('issue').value;
+            
+            if (!name || !email || !model || !issue) {
+                alert('Vyplňte prosím všechna povinná pole (jméno, email, model a popis závady).');
+                return;
+            }
+            
+            // Vytvoření emailové zprávy
+            const subject = `Poptávka opravy: ${model}`;
+            const body = `Dobrý den,\n\nmám zájem o opravu iPhonu.\n\n` +
+                        `MODEL: ${model}\n` +
+                        `Jméno: ${name}\n` +
+                        `Email: ${email}\n` +
+                        `Telefon: ${phone || 'neuvedeno'}\n\n` +
+                        `POPIS ZÁVADY:\n${issue}\n\n` +
+                        `Děkuji za cenovou nabídku.\n\nS pozdravem,\n${name}`;
+            
+            // Otevření emailového klienta
+            const mailtoLink = `mailto:nabidky@secondapple.cz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Ukázat potvrzení
+            const confirmed = confirm('Chcete otevřít emailový klient a odeslat poptávku?');
+            if (confirmed) {
+                window.location.href = mailtoLink;
+                
+                // Reset formuláře po odeslání
+                setTimeout(() => {
+                    this.reset();
+                    alert('Děkujeme za poptávku! Zkontrolujte váš emailový klient a odešlete email. Ozveme se vám do 24 hodin s cenovou nabídkou.');
+                }, 1000);
+            }
+        });
+
+        // Rok v copyrightu
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCatalog();
+            document.querySelector('.copyright p').innerHTML = 
+                `&copy; ${new Date().getFullYear()} SecondApple.cz - Katalog oprav iPhonů | IČO: 12345678`;
+        });
+    </script>
+</body>
+</html>
