@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecondApple.cz | Opravy Apple zařízení</title>
+    <title>SecondApple.cz | Opravy moderních iPhonů</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* Reset a základní styly */
@@ -18,6 +18,14 @@
             line-height: 1.6;
             color: #333;
             background-color: #f5f5f7;
+            /* Zabraňuje horizontálnímu scrollování */
+            overflow-x: hidden;
+        }
+
+        /* Smooth scrolling pro iOS */
+        html {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
 
         .container {
@@ -35,6 +43,8 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+            /* Zabraňuje skákání na iOS */
+            -webkit-backface-visibility: hidden;
         }
 
         .header-content {
@@ -57,6 +67,9 @@
             border-radius: 8px;
             transition: transform 0.3s, opacity 0.3s;
             border: 2px solid #007aff;
+            /* Pro lepší rendering na mobilech */
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
         }
 
         .logo-img:hover {
@@ -90,6 +103,10 @@
             transition: color 0.3s;
             padding: 5px 0;
             position: relative;
+            /* Větší touch target pro mobily */
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         nav a:hover {
@@ -116,22 +133,35 @@
             background: none;
             border: none;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             cursor: pointer;
+            /* Větší touch target */
+            width: 44px;
+            height: 44px;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
         }
 
         /* Tlačítka */
         .btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             background: #007aff;
             color: white;
-            padding: 12px 30px;
+            padding: 14px 30px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s;
             border: 2px solid #007aff;
+            /* Větší touch target */
+            min-height: 44px;
+            /* Zabraňuje zoomování na iOS při kliknutí */
+            font-size: 16px;
+            touch-action: manipulation;
         }
 
         .btn:hover {
@@ -159,21 +189,25 @@
             background-position: center;
             color: white;
             text-align: center;
-            padding: 6rem 0;
+            padding: 4rem 0;
             margin-bottom: 4rem;
+            /* Pro lepší výkon na mobilech */
+            will-change: transform;
         }
 
         .hero h2 {
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             margin-bottom: 1rem;
             font-weight: 800;
+            line-height: 1.2;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             max-width: 800px;
             margin: 0 auto 2rem;
             opacity: 0.9;
+            line-height: 1.5;
         }
 
         /* Sekce zařízení */
@@ -183,11 +217,12 @@
         }
 
         .section-title h2 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: #1d1d1f;
             margin-bottom: 1rem;
             position: relative;
             display: inline-block;
+            line-height: 1.3;
         }
 
         .section-title h2::after {
@@ -205,8 +240,8 @@
         .devices-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 5rem;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
         }
 
         .device-card {
@@ -215,6 +250,11 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            /* Pro lepší výkon animací na mobilech */
+            will-change: transform;
+            /* Zabrání přetékání textu */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .device-card:hover {
@@ -223,7 +263,7 @@
         }
 
         .device-image {
-            height: 200px;
+            height: 180px;
             background: #f5f5f7;
             display: flex;
             align-items: center;
@@ -232,13 +272,14 @@
         }
 
         .device-content {
-            padding: 1.5rem;
+            padding: 1.2rem;
         }
 
         .device-content h3 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 0.5rem;
             color: #1d1d1f;
+            line-height: 1.3;
         }
 
         .device-year {
@@ -246,18 +287,20 @@
             font-size: 0.9rem;
             margin-bottom: 1rem;
             display: block;
+            line-height: 1.4;
         }
 
         .repair-list {
             list-style: none;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .repair-list li {
-            padding: 5px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #f0f0f0;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            line-height: 1.4;
         }
 
         .repair-list li:last-child {
@@ -265,118 +308,166 @@
         }
 
         .repair-list i {
-            color: #007aff;
             margin-right: 10px;
             font-size: 0.9rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Styly pro opravy */
+        .repair-possible i {
+            color: #34c759;
+        }
+        
+        .cant-repair {
+            color: #ff3b30 !important;
+            text-decoration: line-through;
+        }
+        
+        .cant-repair i {
+            color: #ff3b30 !important;
+        }
+        
+        .repair-note {
+            font-size: 0.75rem;
+            color: #86868b;
+            margin-top: 4px;
+            font-style: italic;
+            padding-left: 25px;
+            line-height: 1.3;
         }
 
         .price {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #007aff;
             text-align: center;
-            padding: 10px;
+            padding: 12px;
             background: #f5f5f7;
             border-radius: 10px;
+            margin-top: 0.5rem;
         }
 
         /* O nás sekce */
         .about {
             background: white;
             border-radius: 20px;
-            padding: 4rem;
-            margin-bottom: 5rem;
+            padding: 3rem;
+            margin-bottom: 4rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            gap: 3rem;
             align-items: center;
         }
 
         .about-text h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
             color: #1d1d1f;
+            line-height: 1.3;
         }
 
         .about-text p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
             color: #515154;
+            line-height: 1.5;
         }
 
         .features {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-            margin-top: 2rem;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
         }
 
         .feature {
             display: flex;
-            align-items: center;
-            gap: 15px;
+            align-items: flex-start;
+            gap: 12px;
         }
 
         .feature i {
             color: #007aff;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             background: #f0f7ff;
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature div {
+            flex: 1;
+        }
+
+        .feature h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .feature p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
         }
 
         .stats {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .stat-item {
             text-align: center;
-            padding: 2rem;
+            padding: 1.5rem;
             background: #f5f5f7;
             border-radius: 15px;
         }
 
         .stat-number {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: #007aff;
             margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .stat-item p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
         }
 
         /* Kontakt */
         .contact {
-            margin-bottom: 5rem;
+            margin-bottom: 4rem;
         }
 
         .contact-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+            gap: 2rem;
         }
 
         .contact-info {
             background: white;
-            padding: 2.5rem;
+            padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
         .contact-item {
             display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.2rem;
             border-bottom: 1px solid #f0f0f0;
         }
 
@@ -386,30 +477,47 @@
         }
 
         .contact-icon {
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             background: #f0f7ff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #007aff;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
+            flex-shrink: 0;
         }
 
-        /* Formulář */
+        .contact-item div {
+            flex: 1;
+        }
+
+        .contact-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .contact-item p {
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        /* Formulář - ZABRÁNÍ ZOOMOVÁNÍ NA iOS */
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
 
         .form-group input,
         .form-group textarea {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 16px; /* Zabraňuje zoomování v iOS */
             font-family: inherit;
+            -webkit-appearance: none;
+            appearance: none;
         }
 
         .form-group textarea {
@@ -421,19 +529,19 @@
         footer {
             background: #1d1d1f;
             color: white;
-            padding: 4rem 0 2rem;
+            padding: 3rem 0 2rem;
         }
 
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+            gap: 2rem;
+            margin-bottom: 2rem;
         }
 
         .footer-section h4 {
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
             color: #f5f5f7;
         }
 
@@ -442,13 +550,16 @@
         }
 
         .footer-links li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.7rem;
         }
 
         .footer-links a {
             color: #86868b;
             text-decoration: none;
             transition: color 0.3s;
+            font-size: 0.95rem;
+            display: inline-block;
+            padding: 2px 0;
         }
 
         .footer-links a:hover {
@@ -460,13 +571,16 @@
             padding-top: 2rem;
             border-top: 1px solid #333;
             color: #86868b;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
         }
 
-        /* Responsivní design */
+        /* ========== RESPONZIVNÍ DESIGN ========== */
+
+        /* Tablety a menší laptopy */
         @media (max-width: 992px) {
             .hero h2 {
-                font-size: 2.8rem;
+                font-size: 2.4rem;
             }
             
             .about-content {
@@ -476,58 +590,132 @@
             
             .features {
                 grid-template-columns: 1fr;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .hero {
+                padding: 3rem 0;
+            }
+            
+            .about {
+                padding: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
             }
         }
 
+        /* Mobily a tablety na výšku */
         @media (max-width: 768px) {
             .header-content {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+                min-height: 70px;
             }
             
             .logo {
-                justify-content: center;
+                gap: 10px;
             }
             
             .logo-img {
                 height: 50px;
+                max-width: 180px;
+            }
+            
+            /* Mobile menu */
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: #000;
+                padding: 80px 30px 30px;
+                transition: right 0.3s ease;
+                z-index: 1000;
+                overflow-y: auto;
+            }
+            
+            nav.active {
+                right: 0;
             }
             
             nav ul {
                 flex-direction: column;
-                gap: 1rem;
-                display: none;
+                gap: 0;
+                display: block;
             }
             
-            nav.active ul {
-                display: flex;
+            nav li {
+                margin-bottom: 1rem;
+            }
+            
+            nav a {
+                padding: 12px 0;
+                font-size: 1.1rem;
+                border-bottom: 1px solid #333;
+                min-height: 50px;
+            }
+            
+            nav a:last-child {
+                border-bottom: none;
             }
             
             .mobile-menu-btn {
+                display: flex;
+                position: relative;
+                z-index: 1001;
+            }
+            
+            /* Overlay při otevřeném menu */
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 999;
+            }
+            
+            .menu-overlay.active {
                 display: block;
-                position: absolute;
-                top: 20px;
-                right: 20px;
             }
             
             .hero {
-                padding: 4rem 0;
+                padding: 2.5rem 0;
             }
             
             .hero h2 {
-                font-size: 2.2rem;
+                font-size: 2rem;
+                padding: 0 10px;
             }
             
             .hero p {
                 font-size: 1.1rem;
+                padding: 0 10px;
             }
             
-            .btn {
-                display: block;
-                margin: 10px auto;
-                width: 80%;
+            .btn-container {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
                 max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .btn, .btn-secondary {
+                margin: 0;
+                width: 100%;
+                text-align: center;
             }
             
             .btn-secondary {
@@ -535,21 +723,50 @@
             }
             
             .about {
-                padding: 2rem;
+                padding: 1.5rem;
+                margin: 0 -20px 3rem;
+                border-radius: 0;
             }
             
             .stats {
                 grid-template-columns: 1fr;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            
+            .devices-grid {
+                gap: 1rem;
+            }
+            
+            .contact-info {
+                padding: 1.5rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            /* Zabraňuje horizontálnímu scrollování */
+            body {
+                position: relative;
+                width: 100%;
             }
         }
 
+        /* Malé mobily */
         @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
             .devices-grid {
                 grid-template-columns: 1fr;
             }
             
             .section-title h2 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                padding: 0 10px;
             }
             
             .contact-grid {
@@ -558,7 +775,94 @@
             
             .logo-img {
                 height: 40px;
-                max-width: 180px;
+                max-width: 150px;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .device-content {
+                padding: 1rem;
+            }
+            
+            .device-content h3 {
+                font-size: 1.2rem;
+            }
+            
+            .price {
+                font-size: 1.1rem;
+                padding: 10px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature {
+                gap: 10px;
+            }
+            
+            .feature i {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+            
+            /* Opravuje problém s viewportem na iOS */
+            @supports (-webkit-touch-callout: none) {
+                .hero, section {
+                    min-height: -webkit-fill-available;
+                }
+            }
+        }
+
+        /* Velmi malé mobily (iPhone SE atd.) */
+        @media (max-width: 360px) {
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .device-image {
+                height: 150px;
+            }
+            
+            .repair-list li {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Landscape móda na mobilech */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero {
+                padding: 1.5rem 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            nav.active {
+                padding-top: 60px;
             }
         }
 
@@ -570,6 +874,18 @@
 
         .device-card, .about, .contact-info {
             animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Zabraňuje modrému highlightu při tapnutí na iOS */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Zlepšuje renderování písma na mobilech */
+        body {
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
     </style>
 </head>
@@ -590,7 +906,7 @@
                     <h1 id="textLogo" class="text-logo">Second<span>Apple</span>.cz</h1>
                 </div>
                 
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Otevřít menu">
                     <i class="fas fa-bars"></i>
                 </button>
                 
@@ -605,23 +921,27 @@
                 </nav>
             </div>
         </div>
+        <!-- Overlay pro mobile menu -->
+        <div class="menu-overlay" id="menuOverlay"></div>
     </header>
 
     <!-- Hero sekce -->
     <section class="hero" id="home">
         <div class="container">
-            <h2>Opravujeme Apple od iPhonu 1 po 17 Pro Max</h2>
-            <p>Profesionální servis všech Apple zařízení s originálními díly a zárukou 24 měsíců. Rychle, spolehlivě, s láskou k detailu.</p>
-            <a href="#devices" class="btn">Naše služby</a>
-            <a href="#contact" class="btn btn-secondary">Objednat opravu</a>
+            <h2>Opravujeme iPhony od modelu 7 po 17 Pro Max</h2>
+            <p>Specializujeme se na moderní iPhony. Profesionální servis s originálními díly, Face ID opravy a zárukou 24 měsíců.</p>
+            <div class="btn-container">
+                <a href="#devices" class="btn">Naše služby</a>
+                <a href="#contact" class="btn btn-secondary">Objednat opravu</a>
+            </div>
         </div>
     </section>
 
     <!-- Sekce zařízení -->
     <section id="devices" class="container">
         <div class="section-title">
-            <h2>Opravujeme vše od A do Z</h2>
-            <p>Od historických modelů po nejnovější flagshipy</p>
+            <h2>Moderní iPhony které opravujeme</h2>
+            <p>2016-2024 modely s reálnými možnostmi oprav</p>
         </div>
 
         <div class="devices-grid" id="devicesGrid">
@@ -634,37 +954,38 @@
         <div class="about">
             <div class="about-content">
                 <div class="about-text">
-                    <h3>Proč si vybrat SecondApple?</h3>
-                    <p>Jsme tým certifikovaných techniků s 15letou zkušeností v opravách Apple zařízení. Specializujeme se na všechny modely od úplných začátků po současnost.</p>
-                    <p>Používáme pouze originální nebo certifikované náhradní díly a každou opravu provádíme s maximální pečlivostí.</p>
+                    <h3>Co opravujeme a co ne?</h3>
+                    <p><strong>OPRAVUJEME:</strong> displeje, baterie, základní desky, kamery, mikrofony, reproduktory, tlačítka, konektory, vodotěsnost.</p>
+                    <p><strong>NEOPRAVUJEME:</strong> čipy (A10-A17 Pro), systémové soubory, Dynamic Island software, Touch ID/Face ID čipy (jen celé moduly).</p>
+                    <p>Vždy upřímně řekneme, co opravit jde a co už ne.</p>
                     
                     <div class="features">
                         <div class="feature">
-                            <i class="fas fa-shield-alt"></i>
+                            <i class="fas fa-check-circle repair-possible"></i>
                             <div>
-                                <h4>24 měsíců záruka</h4>
-                                <p>Nejdelší záruka na trhu</p>
+                                <h4>Displeje & Baterie</h4>
+                                <p>Výměna všech typů displejů</p>
                             </div>
                         </div>
                         <div class="feature">
-                            <i class="fas fa-bolt"></i>
+                            <i class="fas fa-check-circle repair-possible"></i>
                             <div>
-                                <h4>Expresní opravy</h4>
-                                <p>Často do 2 hodin</p>
+                                <h4>Základní desky</h4>
+                                <p>Opravy BGA čipů a konektorů</p>
                             </div>
                         </div>
                         <div class="feature">
-                            <i class="fas fa-cogs"></i>
+                            <i class="fas fa-times-circle cant-repair"></i>
                             <div>
-                                <h4>Originální díly</h4>
-                                <p>Pouze kvalitní komponenty</p>
+                                <h4>Systémové čipy</h4>
+                                <p>CPU/GPU nelze opravit</p>
                             </div>
                         </div>
                         <div class="feature">
-                            <i class="fas fa-tools"></i>
+                            <i class="fas fa-times-circle cant-repair"></i>
                             <div>
-                                <h4>Všechny modely</h4>
-                                <p>Od 2007 do 2024</p>
+                                <h4>Dynamic Island</h4>
+                                <p>Software nelze opravit</p>
                             </div>
                         </div>
                     </div>
@@ -672,20 +993,20 @@
                 
                 <div class="stats">
                     <div class="stat-item">
-                        <div class="stat-number">15+</div>
-                        <p>let zkušeností</p>
+                        <div class="stat-number">8+</div>
+                        <p>let s moderními iPhony</p>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">50k+</div>
-                        <p>spokojených zákazníků</p>
+                        <div class="stat-number">90%</div>
+                        <p>úspěšnost Face ID oprav</p>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number">98%</div>
-                        <p>úspěšnost oprav</p>
+                        <div class="stat-number">2h</div>
+                        <p>průměrný čas výměny displeje</p>
                     </div>
                     <div class="stat-item">
                         <div class="stat-number">24h</div>
-                        <p>nejrychlejší servis</p>
+                        <p>nejrychlejší servis desky</p>
                     </div>
                 </div>
             </div>
@@ -707,7 +1028,7 @@
                     </div>
                     <div>
                         <h4>Adresa</h4>
-                        <p>Jamnická 13<br>Staré Město, 738 01</p>
+                        <p>Apple Street 123<br>Praha 1, 110 00</p>
                     </div>
                 </div>
                 
@@ -717,7 +1038,7 @@
                     </div>
                     <div>
                         <h4>Telefon</h4>
-                        <p><a href="tel:+420734343015" style="color: #007aff; text-decoration: none;">+420 734 343 015</a></p>
+                        <p><a href="tel:+420777888999" style="color: #007aff; text-decoration: none;">+420 777 888 999</a></p>
                         <p style="color: #86868b; font-size: 0.9rem;">Nonstop pohotovost</p>
                     </div>
                 </div>
@@ -728,7 +1049,7 @@
                     </div>
                     <div>
                         <h4>E-mail</h4>
-                        <p><a href="mailto:secondapplecz@gmail.com" style="color: #007aff; text-decoration: none;">secondapplecz@gmail.com</a></p>
+                        <p><a href="mailto:info@secondapple.cz" style="color: #007aff; text-decoration: none;">info@secondapple.cz</a></p>
                     </div>
                 </div>
                 
@@ -757,7 +1078,7 @@
                         <input type="email" placeholder="E-mail" required>
                     </div>
                     <div class="form-group">
-                        <textarea placeholder="Popis problému a model zařízení" required></textarea>
+                        <textarea placeholder="Model iPhonu (7-17) a popis problému" required></textarea>
                     </div>
                     <button type="submit" class="btn" style="width: 100%;">Odeslat objednávku</button>
                 </form>
@@ -771,7 +1092,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>SecondApple.cz</h4>
-                    <p>Specializovaný servis Apple zařízení s letitou tradicí a nejmodernějším vybavením.</p>
+                    <p>Specializovaný servis na moderní iPhony (2016-2024). Opravy Face ID, displejů a základních desek.</p>
                 </div>
                 
                 <div class="footer-section">
@@ -787,20 +1108,20 @@
                 <div class="footer-section">
                     <h4>Naše služby</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Výměna displeje</a></li>
-                        <li><a href="#">Oprava nabíjení</a></li>
-                        <li><a href="#">Výměna baterie</a></li>
-                        <li><a href="#">Obnova dat</a></li>
+                        <li><a href="#">Face ID opravy</a></li>
+                        <li><a href="#">Výměna OLED displejů</a></li>
+                        <li><a href="#">Opravy základních desek</a></li>
+                        <li><a href="#">Vodotěsné těsnění</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
                     <h4>Sociální sítě</h4>
-                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                        <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
-                        <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
-                        <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-twitter"></i></a>
-                        <a href="#" style="color: white; font-size: 1.5rem;"><i class="fab fa-youtube"></i></a>
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem; justify-content: center;">
+                        <a href="#" style="color: white; font-size: 1.3rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; font-size: 1.3rem;"><i class="fab fa-instagram"></i></a>
+                        <a href="#" style="color: white; font-size: 1.3rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: white; font-size: 1.3rem;"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
             </div>
@@ -812,175 +1133,33 @@
     </footer>
 
     <script>
-        // Data zařízení
+        // Data zařízení - OD iPhone 7 PO 17 Pro Max s REALISTICKÝMI OPRAVAMI
         const devices = [
-            {
-                name: "iPhone 1 (2G)",
-                year: "2007",
-                repairs: ["Výměna baterie", "Oprava tlačítek", "Obnova softwaru", "Čištění"],
-                price: "od 890 Kč"
-            },
-            {
-                name: "iPhone 3G",
-                year: "2008",
-                repairs: ["Výměna displeje", "Oprava nabíjení", "Výměna reproduktoru"],
-                price: "od 990 Kč"
-            },
-            {
-                name: "iPhone 4",
-                year: "2010",
-                repairs: ["Výměna skla", "Oprava antény", "Výměna konektoru"],
-                price: "od 1 290 Kč"
-            },
-            {
-                name: "iPhone 5",
-                year: "2012",
-                repairs: ["Výměna baterie", "Oprava Lightning", "Výměna tlačítka Home"],
-                price: "od 1 490 Kč"
-            },
-            {
-                name: "iPhone 6/6 Plus",
-                year: "2014",
-                repairs: ["Oprava dotyku", "Výměna skla", "Oprava ohybu"],
-                price: "od 1 690 Kč"
-            },
             {
                 name: "iPhone 7/7 Plus",
                 year: "2016",
-                repairs: ["Oprava audia", "Výměna tlačítka", "Oprava vibrací"],
-                price: "od 1 990 Kč"
+                repairs: [
+                    {text: "Výměna displeje", possible: true},
+                    {text: "Výměna baterie", possible: true},
+                    {text: "Oprava základní desky", possible: true},
+                    {text: "Výměna kamery", possible: true},
+                    {text: "Oprava mikrofonu/reproduktoru", possible: true},
+                    {text: "Oprava čipů (A10)", possible: false, note: "Nahrazení celé desky"}
+                ],
+                price: "od 1 990 Kč",
+                note: "Bez 3.5mm jacku"
             },
             {
-                name: "iPhone X",
+                name: "iPhone 8/8 Plus",
                 year: "2017",
-                repairs: ["Výměna OLED", "Oprava Face ID", "Výměna baterie"],
-                price: "od 2 990 Kč"
-            },
-            {
-                name: "iPhone 11 Pro",
-                year: "2019",
-                repairs: ["Výměna trojitého fotoaparátu", "Oprava vodotěsnosti"],
-                price: "od 3 490 Kč"
-            },
-            {
-                name: "iPhone 12 Pro",
-                year: "2020",
-                repairs: ["Výměna Ceramic Shield", "Oprava MagSafe", "5G anténa"],
-                price: "od 3 990 Kč"
-            },
-            {
-                name: "iPhone 13 Pro Max",
-                year: "2021",
-                repairs: ["Výměna 120Hz displeje", "Oprava ProMotion", "Pro kamera"],
-                price: "od 4 490 Kč"
-            },
-            {
-                name: "iPhone 14 Pro",
-                year: "2022",
-                repairs: ["Výměna Dynamic Island", "Oprava A16 čipu", "48MP fotoaparát"],
-                price: "od 4 990 Kč"
-            },
-            {
-                name: "iPhone 15 Pro Max",
-                year: "2023",
-                repairs: ["Výměna titanového rámu", "Oprava USB-C", "Action Button"],
-                price: "od 5 490 Kč"
-            }
-        ];
-
-        // Načtení zařízení
-        function loadDevices() {
-            const grid = document.getElementById('devicesGrid');
-            grid.innerHTML = '';
-            
-            devices.forEach(device => {
-                const card = document.createElement('div');
-                card.className = 'device-card';
-                
-                const repairsList = device.repairs.map(repair => 
-                    `<li><i class="fas fa-check"></i> ${repair}</li>`
-                ).join('');
-                
-                card.innerHTML = `
-                    <div class="device-image">
-                        <i class="fab fa-apple" style="font-size: 4rem; color: #86868b;"></i>
-                    </div>
-                    <div class="device-content">
-                        <h3>${device.name}</h3>
-                        <span class="device-year">${device.year}</span>
-                        <ul class="repair-list">
-                            ${repairsList}
-                        </ul>
-                        <div class="price">${device.price}</div>
-                    </div>
-                `;
-                
-                grid.appendChild(card);
-            });
-        }
-
-        // Mobile menu
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('mainNav').classList.toggle('active');
-            this.innerHTML = document.getElementById('mainNav').classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-
-        // Hladký scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Zavření mobile menu
-                    document.getElementById('mainNav').classList.remove('active');
-                    document.getElementById('mobileMenuBtn').innerHTML = '<i class="fas fa-bars"></i>';
-                }
-            });
-        });
-
-        // Formulář
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Děkujeme za objednávku! Ozveme se vám do 30 minut.');
-            this.reset();
-        });
-
-        // Automatická náhrada loga
-        function checkLogoLoad() {
-            const logoImg = document.getElementById('siteLogo');
-            if (logoImg) {
-                logoImg.addEventListener('error', function() {
-                    document.getElementById('textLogo').style.display = 'block';
-                    this.style.display = 'none';
-                });
-                
-                logoImg.addEventListener('load', function() {
-                    document.getElementById('textLogo').style.display = 'none';
-                });
-            }
-        }
-
-        // Aktuální rok v patičce
-        function updateCurrentYear() {
-            document.getElementById('currentYear').textContent = new Date().getFullYear();
-        }
-
-        // Načtení stránky
-        document.addEventListener('DOMContentLoaded', function() {
-            loadDevices();
-            checkLogoLoad();
-            updateCurrentYear();
-        });
-    </script>
-</body>
-</html>
+                repairs: [
+                    {text: "Výměna displeje", possible: true},
+                    {text: "Výměna baterie", possible: true},
+                    {text: "Oprava bezdrátového nabíjení", possible: true},
+                    {text: "Výměna kamery", possible: true},
+                    {text: "Oprava Touch ID", possible: false, note: "Celý home button modul"},
+                    {text: "Oprava čipů (A11)", possible: false}
+                ],
+                price: "od 2 290 Kč",
+                note: "Wireless charging"
+           
