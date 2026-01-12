@@ -52,17 +52,34 @@
             align-items: center;
         }
 
+        /* LOGO - TEXT V LEVÉM HORNÍM ROHU */
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             text-decoration: none;
         }
 
-        .logo-img {
-            height: 45px;
-            width: auto;
-            max-width: 180px;
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .logo-babyblue {
+            color: #87CEEB; /* Baby blue barva */
+        }
+
+        .logo-apple {
+            color: white;
+        }
+
+        .logo-dot-cz {
+            color: white;
+            font-size: 1.4rem;
+            opacity: 0.9;
         }
 
         /* Navigace */
@@ -504,6 +521,11 @@
                 padding: 6px 12px;
                 font-size: 0.9rem;
             }
+            
+            /* Logo text na mobilech */
+            .logo-text {
+                font-size: 1.5rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -565,6 +587,11 @@
                 padding: 8px 16px;
                 font-size: 0.9rem;
             }
+            
+            /* Logo text na malých mobilech */
+            .logo-text {
+                font-size: 1.3rem;
+            }
         }
 
         /* Animace */
@@ -605,6 +632,49 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+        
+        /* Gmail popup */
+        .gmail-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 2000;
+            max-width: 500px;
+            width: 90%;
+            display: none;
+        }
+        
+        .gmail-popup h3 {
+            color: #1d1d1f;
+            margin-bottom: 1rem;
+        }
+        
+        .gmail-popup p {
+            margin-bottom: 1.5rem;
+            color: #515154;
+        }
+        
+        .gmail-popup-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1999;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -613,9 +683,11 @@
         <div class="container">
             <div class="header-content">
                 <a href="#home" class="logo">
-                    <img src="https://github.com/secondapplecz/secondapple.github.io/blob/f8c2e30cf4aafdf398d5d93a58f48ba2f4db44c7/SecondAppleLogo.png" 
-                         alt="SecondApple Logo" 
-                         class="logo-img">
+                    <div class="logo-text">
+                        <span class="logo-babyblue">baby blue second</span>
+                        <span class="logo-apple">apple</span>
+                        <span class="logo-dot-cz">.cz</span>
+                    </div>
                 </a>
                 <nav>
                     <ul>
@@ -666,12 +738,12 @@
                         
                         <div class="form-group">
                             <label for="email">Váš email *</label>
-                            <input type="email" id="email" name="email" required placeholder="jan@example.cz">
+                            <input type="email" id="email" name="email" required placeholder="vas.email@gmail.com">
                         </div>
                         
                         <div class="form-group">
-                            <label for="phone">Telefon</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+420 777 888 999">
+                            <label for="phone">Telefon *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+420 777 888 999" required>
                         </div>
                         
                         <div class="form-group">
@@ -695,7 +767,7 @@
                             <i class="fas fa-paper-plane"></i> Odeslat poptávku
                         </button>
                         <p style="margin-top: 1rem; color: #86868b; font-size: 0.9rem;">
-                            Nebo nám napište přímo na: <a href="mailto:info@secondapple.cz" style="color: #007aff;">info@secondapple.cz</a>
+                            Po odeslání formuláře se otevře Gmail s předvyplněným emailem
                         </p>
                     </div>
                 </form>
@@ -785,6 +857,23 @@
             </div>
         </div>
     </footer>
+
+    <!-- Gmail Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="gmail-popup" id="gmailPopup">
+        <h3>Otevřít Gmail</h3>
+        <p>Nyní se otevře Gmail s předvyplněným emailem. Prosím zkontrolujte údaje a odešlete email.</p>
+        <p><strong>Pokud se Gmail neotevře automaticky, klikněte na odkaz níže:</strong></p>
+        <a href="#" id="gmailLink" style="color: #007aff; word-break: break-all; display: block; margin: 1rem 0;"></a>
+        <div class="gmail-popup-buttons">
+            <button class="btn" id="openGmailBtn">
+                <i class="fab fa-google"></i> Otevřít Gmail
+            </button>
+            <button class="btn" id="closePopupBtn" style="background: #86868b; border-color: #86868b;">
+                Zavřít
+            </button>
+        </div>
+    </div>
 
     <script>
         // Data iPhonů pro katalog
@@ -1013,6 +1102,68 @@
             }, 500);
         }
 
+        // Funkce pro vytvoření Gmail URL
+        function createGmailUrl(data) {
+            const subject = `Poptávka opravy iPhonu: ${data.model}`;
+            const body = `Dobrý den,\n\nmám zájem o opravu iPhonu s následujícími detaily:\n\n` +
+                        `📱 MODEL: ${data.model}\n` +
+                        `👤 JMÉNO: ${data.name}\n` +
+                        `📧 EMAIL: ${data.email}\n` +
+                        `📞 TELEFON: ${data.phone}\n\n` +
+                        `🔧 POPIS ZÁVADY:\n${data.issue}\n\n` +
+                        `💰 POŽADUJI O CENOVOU NABÍDKU\n\n` +
+                        `Děkuji a těším se na odpověď.\n\nS pozdravem,\n${data.name}`;
+            
+            // Gmail specific URL
+            return `https://mail.google.com/mail/?view=cm&fs=1&to=secondapplecz@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+        // Funkce pro vytvoření standardního mailto URL
+        function createMailtoUrl(data) {
+            const subject = `Poptávka opravy iPhonu: ${data.model}`;
+            const body = `Dobrý den,\n\nmám zájem o opravu iPhonu s následujícími detaily:\n\n` +
+                        `📱 MODEL: ${data.model}\n` +
+                        `👤 JMÉNO: ${data.name}\n` +
+                        `📧 EMAIL: ${data.email}\n` +
+                        `📞 TELEFON: ${data.phone}\n\n` +
+                        `🔧 POPIS ZÁVADY:\n${data.issue}\n\n` +
+                        `💰 POŽADUJI O CENOVOU NABÍDKU\n\n` +
+                        `Děkuji a těším se na odpověď.\n\nS pozdravem,\n${data.name}`;
+            
+            return `mailto:secondapplecz@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
+
+        // Funkce pro zobrazení Gmail popupu
+        function showGmailPopup(data) {
+            const gmailUrl = createGmailUrl(data);
+            const mailtoUrl = createMailtoUrl(data);
+            
+            // Nastavení odkazu v popupu
+            document.getElementById('gmailLink').href = gmailUrl;
+            document.getElementById('gmailLink').textContent = 'Otevřít Gmail s předvyplněným emailem';
+            
+            // Nastavení tlačítka pro otevření Gmailu
+            document.getElementById('openGmailBtn').onclick = function() {
+                window.open(gmailUrl, '_blank');
+                closeGmailPopup();
+            };
+            
+            // Zobrazení popupu
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('gmailPopup').style.display = 'block';
+            
+            // Automatické otevření Gmailu po 2 sekundách
+            setTimeout(() => {
+                window.open(gmailUrl, '_blank');
+            }, 2000);
+        }
+
+        // Funkce pro zavření popupu
+        function closeGmailPopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('gmailPopup').style.display = 'none';
+        }
+
         // Formulář odesílání emailu
         document.getElementById('contactForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -1028,8 +1179,8 @@
             const issue = document.getElementById('issue').value.trim();
             
             // Validace
-            if (!name || !email || !model || !issue) {
-                showMessage('Vyplňte prosím všechna povinná pole (jméno, email, model a popis závady).', 'error');
+            if (!name || !email || !model || !issue || !phone) {
+                showMessage('Vyplňte prosím všechna povinná pole (jméno, email, telefon, model a popis závady).', 'error');
                 return;
             }
             
@@ -1040,41 +1191,39 @@
                 return;
             }
             
+            // Validace telefonu (minimálně 9 číslic)
+            const phoneRegex = /^[0-9+\s]{9,}$/;
+            if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+                showMessage('Zadejte prosím platné telefonní číslo (minimálně 9 číslic).', 'error');
+                return;
+            }
+            
             // Přidání loading state
             form.classList.add('loading');
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Odesílám...';
             
             try {
-                // Simulace odeslání (nahraďte skutečným API voláním)
+                // Simulace odeslání
                 await new Promise(resolve => setTimeout(resolve, 1500));
                 
-                // Vytvoření emailové zprávy
-                const subject = `Poptávka opravy: ${model}`;
-                const body = `Dobrý den,\n\nmám zájem o opravu iPhonu.\n\n` +
-                            `MODEL: ${model}\n` +
-                            `Jméno: ${name}\n` +
-                            `Email: ${email}\n` +
-                            `Telefon: ${phone || 'neuvedeno'}\n\n` +
-                            `POPIS ZÁVADY:\n${issue}\n\n` +
-                            `Děkuji za cenovou nabídku.\n\nS pozdravem,\n${name}`;
+                // Data z formuláře
+                const formData = {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    model: model,
+                    issue: issue
+                };
                 
-                // Otevření emailového klienta
-                const mailtoLink = `mailto:secondapplecz@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+                // Zobrazení Gmail popupu
+                showGmailPopup(formData);
                 
-                showMessage('Formulář byl úspěšně odeslán! Přesměruji vás do emailového klienta...', 'success');
-                
-                // Krátká pauza před přesměrováním
+                // Reset formuláře po odeslání
                 setTimeout(() => {
-                    window.location.href = mailtoLink;
-                    
-                    // Reset formuláře po odeslání
-                    setTimeout(() => {
-                        form.reset();
-                        form.classList.remove('loading');
-                        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Odeslat poptávku';
-                        messageDiv.style.display = 'none';
-                    }, 2000);
-                }, 2000);
+                    form.reset();
+                    form.classList.remove('loading');
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Odeslat poptávku';
+                }, 1000);
                 
             } catch (error) {
                 showMessage('Došlo k chybě při odesílání. Zkuste to prosím znovu.', 'error');
@@ -1139,6 +1288,19 @@
             
             document.querySelectorAll('.iphone-model').forEach(item => {
                 observer.observe(item);
+            });
+            
+            // Zavření popupu při kliknutí na overlay
+            document.getElementById('overlay').addEventListener('click', closeGmailPopup);
+            
+            // Zavření popupu při kliknutí na tlačítko zavřít
+            document.getElementById('closePopupBtn').addEventListener('click', closeGmailPopup);
+            
+            // Zavření popupu při stisknutí ESC
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeGmailPopup();
+                }
             });
         });
     </script>
